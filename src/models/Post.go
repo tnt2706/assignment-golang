@@ -1,13 +1,9 @@
 package models
 
+import (
+	"go.mongodb.org/mongo-driver/bson/primitive"
+)
+
 type Post struct {
-	Id string `json:"_id"`
-	Title string `json."title"`
-	Description string `json:"description"`
-	Content string `json:"content"`
-	Owner string `json:"owner"`
-	isPus string `json."salt"`
-	Hash string `json."hash"`
-	Roles [string] `json."roles"`
-	Status string `json."status"`
+	Id  primitive.ObjectID `json:"id,omitempty"`
 }

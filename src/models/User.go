@@ -1,12 +1,12 @@
 package models
 
+
 type User struct {
-	Id string `json:"_id"`
-	FirstName string `json:"firstName"`
-	LastName string `json:"lastName"`
-	Email string `json:"email"`
-	Salt string `json."salt"`
-	Hash string `json."hash"`
-	Roles [string] `json."roles"`
-	Status string `json."status"`
+	FirstName string `json:"firstName" validate:"required"`
+	LastName string `json:"lastName" validate:"required"`
+	Email string `json:"email" validate:"required"`
+	Salt string `json."salt" validate:"required`
+	Hash int32 `json."hash" validate:"required`
+	Roles []string `json."roles" validate:"required`
+	Status string `json."status" validate:"required`
 }
