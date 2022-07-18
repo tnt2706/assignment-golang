@@ -19,7 +19,6 @@ import (
 var userCollection *mongo.Collection = configs.GetCollection(configs.DB, "users")
 var validate = validator.New()
 
-Q
 func GetUser() gin.HandlerFunc {
   return func(c *gin.Context) {
 		c.JSON(http.StatusOK, "Sign up")
@@ -50,7 +49,7 @@ func CreateUser() gin.HandlerFunc {
       return
     }
 
-    hash, errHash := utils.HashPassword(user.Password)
+    hash, errHash := utils.HashPassword(user.Hash)
     if errHash != nil{
       log.Fatal("Hash password error")
     }
@@ -59,8 +58,8 @@ func CreateUser() gin.HandlerFunc {
       FirstName: user.FirstName,
       LastName: user.LastName,
       Email: user.Email,
-      Salt :hash,
-      Hash : 14,
+      Hash :hash,
+      Salt : 14,
       Roles: user.Roles,
       Status: user.Status,
     }
@@ -78,22 +77,21 @@ func CreateUser() gin.HandlerFunc {
 
 func UpdateUser() gin.HandlerFunc {
   return func(c *gin.Context) {
-		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-
-    var user models.User
+		_, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 
     defer cancel();
 
-    if err := c.BindJSON(&user); err != nil {
-      c.JSON(http.StatusBadRequest, responses.UserResponse{Status: http.StatusBadRequest, Message: "error", Data: map[string]interface{}{"data": err.Error()}})
-      return
-    }
   }
 }
 
 func DeleteUser() gin.HandlerFunc {
   return func(c *gin.Context) {
-		c.JSON(http.StatusOK, "Sign up")
+		_,cancel := context.WithTimeout(context.Background() , 10*time.Second)
+
+    defer cancel()
+
+    userId := c.Param("userId")
+    log.Fatal(userId)
   }
 }
 
