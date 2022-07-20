@@ -47,7 +47,31 @@ func GetUser() gin.HandlerFunc {
 
 func GetUsers() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		c.JSON(http.StatusOK, "Sign up")
+		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+
+		var users []models.User
+		defer cancel()
+
+
+		results, err := User.Find(ctx, bson.M{})
+		if err != nil {
+			c.JSON(http.StatusOK, res.UserResponse{IsSuccess: false, Message: "User not found"})
+			return
+		}
+
+		defer results.Close(ctx)
+
+		for results.Next(ctx) {
+            var singleUser models.User
+            if err = results.Decode(&singleUser); err != nil {
+                c.JSON(http.StatusOK, res.UserResponse{IsSuccess: false, Message: err.Error()})
+            }
+          
+            users = append(users, singleUser)
+        }
+
+
+		c.JSON(http.StatusOK, res.UserResponse{IsSuccess: true, Data: map[string]interface{}{"data": users}})
 	}
 }
 
