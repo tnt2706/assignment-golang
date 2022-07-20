@@ -18,14 +18,30 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
+
+	// "github.com/samber/lo"
+    // lop "github.com/samber/lo/parallel"
 )
 
-var userCollection *mongo.Collection = configs.GetCollection(configs.DB, "users")
+var User *mongo.Collection = configs.GetCollection(configs.DB, "users")
 var validate = validator.New()
 
 func GetUser() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		c.JSON(http.StatusOK, "Sign up")
+		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+
+		var user models.User
+		defer cancel()
+
+		userObjId, _ := primitive.ObjectIDFromHex(c.Param("userId"))
+
+		err := User.FindOne(ctx, bson.M{"_id": userObjId}).Decode(&user)
+		if err != nil {
+			c.JSON(http.StatusOK, res.UserResponse{IsSuccess: false, Message: "User not found"})
+			return
+		}
+
+		c.JSON(http.StatusOK, res.UserResponse{IsSuccess: true, Data: map[string]interface{}{"data": user}})
 	}
 }
 
@@ -68,7 +84,7 @@ func CreateUser() gin.HandlerFunc {
 			Status:    user.Status,
 		}
 
-		result, err := userCollection.InsertOne(ctx, newUser)
+		result, err := User.InsertOne(ctx, newUser)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, res.UserResponse{IsSuccess: false, Message: err.Error()})
 			return
@@ -86,19 +102,27 @@ func UpdateUser() gin.HandlerFunc {
 		var user models.User
 		defer cancel()
 
+
+		var foundUser bson.D
+
 		userId, _ := primitive.ObjectIDFromHex(c.Param("userId"))
 
-		err := userCollection.FindOne(ctx, bson.M{"_id": userId}).Decode(&user)
+		err := User.FindOne(ctx, bson.M{"_id": userId}).Decode(&foundUser)
 
-		fmt.Println(user)
 		if err != nil {
 			c.JSON(http.StatusOK, res.UserResponse{IsSuccess: false, Message: "User not found"})
+			return
 		}
+
+
 
 		if err := c.BindJSON(&user); err != nil {
 			c.JSON(http.StatusInternalServerError, res.UserResponse{IsSuccess: false, Message: err.Error()})
 			return
 		}
+
+
+		fmt.Println(user)
 
 		c.JSON(http.StatusOK, res.UserResponse{IsSuccess: true})
 	}
@@ -113,7 +137,7 @@ func DeleteUser() gin.HandlerFunc {
 
 		objUserId, _ := primitive.ObjectIDFromHex(userId)
 
-		_, err := userCollection.DeleteOne(ctx, bson.M{"_id": objUserId})
+		_, err := User.DeleteOne(ctx, bson.M{"_id": objUserId})
 
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, res.UserResponse{IsSuccess: false, Message: err.Error()})
