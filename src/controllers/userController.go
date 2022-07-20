@@ -18,9 +18,8 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
-
 	// "github.com/samber/lo"
-    // lop "github.com/samber/lo/parallel"
+	// lop "github.com/samber/lo/parallel"
 )
 
 var User *mongo.Collection = configs.GetCollection(configs.DB, "users")
@@ -52,7 +51,6 @@ func GetUsers() gin.HandlerFunc {
 		var users []models.User
 		defer cancel()
 
-
 		results, err := User.Find(ctx, bson.M{})
 		if err != nil {
 			c.JSON(http.StatusOK, res.UserResponse{IsSuccess: false, Message: "User not found"})
@@ -62,14 +60,13 @@ func GetUsers() gin.HandlerFunc {
 		defer results.Close(ctx)
 
 		for results.Next(ctx) {
-            var singleUser models.User
-            if err = results.Decode(&singleUser); err != nil {
-                c.JSON(http.StatusOK, res.UserResponse{IsSuccess: false, Message: err.Error()})
-            }
-          
-            users = append(users, singleUser)
-        }
+			var singleUser models.User
+			if err = results.Decode(&singleUser); err != nil {
+				c.JSON(http.StatusOK, res.UserResponse{IsSuccess: false, Message: err.Error()})
+			}
 
+			users = append(users, singleUser)
+		}
 
 		c.JSON(http.StatusOK, res.UserResponse{IsSuccess: true, Data: map[string]interface{}{"data": users}})
 	}
@@ -126,7 +123,6 @@ func UpdateUser() gin.HandlerFunc {
 		var user models.User
 		defer cancel()
 
-
 		var foundUser bson.D
 
 		userId, _ := primitive.ObjectIDFromHex(c.Param("userId"))
@@ -138,13 +134,10 @@ func UpdateUser() gin.HandlerFunc {
 			return
 		}
 
-
-
 		if err := c.BindJSON(&user); err != nil {
 			c.JSON(http.StatusInternalServerError, res.UserResponse{IsSuccess: false, Message: err.Error()})
 			return
 		}
-
 
 		fmt.Println(user)
 

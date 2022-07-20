@@ -1,22 +1,19 @@
 package utils
 
-
 import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func ValidateCreateUser() bool{
+func ValidateCreateUser() bool {
 	return true
 }
 
-func HashPassword(password string) (string, error){
+func HashPassword(password string) (string, error) {
 	hash, err := bcrypt.GenerateFromPassword([]byte(password), 14)
-	return string(hash),err
+	return string(hash), err
 }
 
-
-func CheckPasswordHash(password, hash string) bool{
+func CheckPasswordHash(password, hash string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
 	return err == nil
 }
-
