@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package calculatorService;
 
+option go_package="./src/grpc/pb";
+
 service CalculatorService {
   rpc Sum (SumRequest) returns (SumResponse) { };
 }
