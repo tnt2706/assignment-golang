@@ -1,17 +1,42 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
+	"context"
+	"flag"
+	"fmt"
+	"log"
+	"net"
+
+	"google.golang.org/grpc"
+
+	"assignment/src/pkg/pb"
 )
 
+var (
+	GRPC_PORT = flag.Int("port", 6900, "The server port")
+)
+
+type server struct {
+	pb.UnimplementedCalculatorServiceServer
+}
+
+func (s *server) Sum(ctx context.Context, in *pb.SumRequest) (*pb.SumResponse, error) {
+	fmt.Print(in)
+	return &pb.SumResponse{Result: in.FirstNumber + in.SecondNumber}, nil
+}
+
 func main() {
-	router := gin.Default()
+	flag.Parse()
+	lis, err := net.Listen("tcp", fmt.Sprintf("localhost:%d", *GRPC_PORT))
+	if err != nil {
+		log.Fatalf("failed to listen: %v", err)
+	}
 
-	router.GET("/", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"data": "Hello from Gin-gonic & mongoDB",
-		})
-	})
+	var opts []grpc.ServerOption
+	grpcServer := grpc.NewServer(opts...)
 
-	router.Run("localhost:8080")
+	pb.RegisterCalculatorServiceServer(grpcServer, &server{})
+
+	log.Printf("server listening at %v", lis.Addr())
+	grpcServer.Serve(lis)
 }
