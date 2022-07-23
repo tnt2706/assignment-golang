@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package calculatorService;
 
-option go_package="./src/grpc/pb";
+option go_package="./src/pkg/pb";
 
 service CalculatorService {
   rpc Sum (SumRequest) returns (SumResponse) { };
