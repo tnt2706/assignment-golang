@@ -1,6 +1,5 @@
 # Assignment Golang
 
-
 ## gRPC
 
 - [Introduction](https://github.com/grpc/grpc-go/tree/master/examples/helloworld)
