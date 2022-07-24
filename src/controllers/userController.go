@@ -18,8 +18,6 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
-	// "github.com/samber/lo"
-	// lop "github.com/samber/lo/parallel"
 )
 
 var User *mongo.Collection = configs.GetCollection(configs.DB, "users")
