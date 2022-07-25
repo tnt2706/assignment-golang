@@ -2,11 +2,9 @@ package main
 
 import (
 	"assignment/src/configs"
-	"assignment/src/routers"
 
 	"github.com/gin-gonic/gin"
 )
-
 
 func main() {
 	router := gin.Default()
@@ -19,7 +17,5 @@ func main() {
 		})
 	})
 
-	routers.UserRouter(router)
-
-	router.Run("localhost:8080") 
+	router.Run("localhost:8080")
 }

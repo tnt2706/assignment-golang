@@ -1,1 +1,3 @@
-# Assignment Golang
+# Golang
+
+## GraphQL
