@@ -1,4 +1,4 @@
 .PHONY: start
 
 start:
-	air /src/main.go
+	air /src/server.go
