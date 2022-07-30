@@ -22,11 +22,6 @@ resolver:
   layout: follow-schema
   dir: graph
   package: graph
-  models:
-  User:
-    fields:
-      friends:
-        resolver: true # force a resolver to be generated
 
 # Optional: turn on use ` + "`" + `gqlgen:"fieldName"` + "`" + ` tags in your models
 # struct_tag: json

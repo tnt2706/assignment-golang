@@ -12,7 +12,6 @@ type Todo {
 type User {
   id: ID!
   name: String!
-  friends: [User!]!
 }
 
 type Query {
