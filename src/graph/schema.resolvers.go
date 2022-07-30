@@ -4,8 +4,8 @@ package graph
 // will be copied through when generating and any unknown code will be moved to the end.
 
 import (
-	"assignment/graphql/graph/generated"
-	"assignment/graphql/graph/model"
+	"assignment/src/graph/generated"
+	"assignment/src/graph/model"
 	"context"
 	"fmt"
 )

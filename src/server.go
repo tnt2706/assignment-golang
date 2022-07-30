@@ -1,8 +1,8 @@
 package main
 
 import (
-	"assignment/graphql/graph"
-	"assignment/graphql/graph/generated"
+	"assignment/src/graph"
+	"assignment/src/graph/generated"
 	"log"
 	"net/http"
 	"os"
