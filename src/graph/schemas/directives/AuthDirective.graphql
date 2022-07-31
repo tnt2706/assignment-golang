@@ -1,0 +1,9 @@
+directive @auth(
+ roles: [Role] = [ADMIN],
+) on OBJECT | FIELD_DEFINITION
+
+enum Role {
+  CLINIC_TECHNICIAN
+  CLINIC_PHYSICIAN
+  PATIENT
+}

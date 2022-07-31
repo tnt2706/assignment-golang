@@ -1,0 +1,14 @@
+input CreateUserInput {
+  firstName: String!
+  lastName: String!
+  role: String
+  status: String
+  hash: String
+  salt: String
+}
+
+input UpdateUserInput {
+  firstName: String
+  lastName: String
+  status: String
+}

@@ -1,0 +1,10 @@
+type UserResponse {
+  isSuccess: Boolean!
+  message: String
+  user: User
+}
+
+type Response {
+  isSuccess: Boolean!
+  message: String
+}

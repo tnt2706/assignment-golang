@@ -1,0 +1,10 @@
+type User {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  email: String
+  hash: String
+  salt: String
+  roles: [String]
+  status: String
+}
