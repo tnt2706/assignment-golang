@@ -9,11 +9,15 @@ import (
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
+
+	"assignment/src/configs"
 )
 
 const defaultPort = "8080"
 
 func main() {
+	configs.ConnectDB()
+
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = defaultPort

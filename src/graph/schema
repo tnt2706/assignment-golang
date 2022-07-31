@@ -1,6 +1,0 @@
-scalar AWSDateTime
-scalar AWSJSON
-scalar AWSEmail
-directive @aws_subscribe(mutations: [String!]!) on FIELD_DEFINITION
-directive @aws_cognito_user_pools on FIELD_DEFINITION | OBJECT
-directive @aws_iam on FIELD_DEFINITION | OBJECT
