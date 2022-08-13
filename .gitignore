@@ -263,5 +263,7 @@ go.work
 /bin/
 
 
+### others
 
+__debug_bin
 # End of https://www.gitignore.io/api/node,macos,visualstudiocode

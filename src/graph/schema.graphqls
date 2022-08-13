@@ -45,7 +45,18 @@ input UpdateUserInput {
 }
 
 type Mutation {
-  createUser(input: CreateUserInput!): UserResponse!
+  createUser(input: CreateUserInput!): UserResponse! @auth(roles:[CLINIC_PHYSICIAN])
   updateUser(input: UpdateUserInput!): UserResponse!
   deleteUser(_id: ID!): Response!
+}
+
+directive @auth(
+ roles: [Role] = [ADMIN],
+) on OBJECT | FIELD_DEFINITION
+
+enum Role {
+  CLINIC_TECHNICIAN
+  CLINIC_PHYSICIAN
+
+  PATIENT
 }
