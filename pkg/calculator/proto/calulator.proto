@@ -1,0 +1,12 @@
+service Greeter {
+  rpc Sum(SumRequest) returns (ResultResponse) {}
+}
+
+message SumRequest {
+  int32 a = 1;
+  int32 b = 2;
+}
+
+message ResultResponse {
+  int32 result = 1;
+}
