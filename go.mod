@@ -3,7 +3,8 @@ module assignment
 go 1.20
 
 require (
-	github.com/kelseyhightower/envconfig v1.4.0
+	github.com/caarlos0/env/v9 v9.0.0
+	github.com/joho/godotenv v1.5.1
 	go.mongodb.org/mongo-driver v1.12.0
 )
 

@@ -15,7 +15,7 @@ var ctx = context.TODO()
 
 func init() {
 	mongoConfig := configs.GetMongoConfig()
-	clientOptions := options.Client().ApplyURI(mongoConfig.COMMON_DB)
+	clientOptions := options.Client().ApplyURI(mongoConfig.DbCommonConnectString)
 	client, err := mongo.Connect(ctx, clientOptions)
 	if err != nil {
 		log.Fatal(err)
