@@ -8,12 +8,13 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 
 	"assignment/configs"
+	"assignment/pkg/calculator"
 )
 
 var collection *mongo.Collection
 var ctx = context.TODO()
 
-func init() {
+func initMongo() {
 	mongoConfig := configs.GetMongoConfig()
 	clientOptions := options.Client().ApplyURI(mongoConfig.DbCommonConnectString)
 	client, err := mongo.Connect(ctx, clientOptions)
@@ -29,6 +30,9 @@ func init() {
 	collection = client.Database("tasker").Collection("tasks")
 }
 
-func main() {
+func init() {
+}
 
+func main() {
+	calculator.StartGrpcServer()
 }
