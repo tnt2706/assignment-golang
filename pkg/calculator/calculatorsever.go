@@ -2,6 +2,7 @@ package calculator
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net"
 
@@ -16,11 +17,12 @@ type server struct {
 
 func (s *server) Sum(ctx context.Context, in *pb.SumRequest) (*pb.SumResponse, error) {
 	result := in.GetFirstNumber() + in.GetSecondNumber()
+	fmt.Println(result)
 	return &pb.SumResponse{Result: result}, nil
 }
 
 func StartGrpcServer() {
-	listener, err := net.Listen("tcp", "0.0.0.0:6900")
+	listener, err := net.Listen("tcp", "0.0.0.0:6903")
 
 	if err != nil {
 		panic(err)

@@ -17,5 +17,5 @@ gen-grpc:
     pkg/calculator/proto/calculator.proto
 
 
-run-grpc-server:
-    go run ./pkg/calculator/calculatorserver.go
+# run-grpc-server:
+#     go run ./pkg/calculator/calculatorserver.go
