@@ -1,14 +1,18 @@
 package main
 
 import (
+	"assignment/internal/graphql/graph"
 	"context"
 	"log"
+	"net/http"
 
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 
 	"assignment/configs"
-	"assignment/pkg/calculator"
+
+	"github.com/99designs/gqlgen/graphql/handler"
+	"github.com/99designs/gqlgen/graphql/playground"
 )
 
 var collection *mongo.Collection
@@ -30,9 +34,18 @@ func initMongo() {
 	collection = client.Database("tasker").Collection("tasks")
 }
 
-func init() {
-}
-
 func main() {
-	calculator.StartGrpcServer()
+	// calculator.StartGrpcServer()
+
+	// port := configs.GetContainerConfig().Port
+
+	const PORT = "4001"
+
+	srv := handler.NewDefaultServer(graph.NewExecutableSchema(graph.Config{Resolvers: &graph.Resolver{}}))
+
+	http.Handle("/", playground.Handler("GraphQL playground", "/query"))
+	http.Handle("/query", srv)
+
+	log.Printf("connect to http://localhost:%s/ for GraphQL playground", PORT)
+	log.Fatal(http.ListenAndServe(":"+PORT, nil))
 }
