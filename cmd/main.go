@@ -1,7 +1,7 @@
 package main
 
 import (
-	"assignment/internal/graphql/graph"
+	graph "assignment/internal/graph/generate"
 	"context"
 	"log"
 	"net/http"
