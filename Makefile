@@ -19,7 +19,7 @@ gen-grpc:
 
 gen-graphql:
     go env -w GOFLAGS=-mod=mod \
-    go run github.com/99designs/gqlgen generate.
+    go run github.com/99designs/gqlgen generate
 
 
 # run-grpc-server:

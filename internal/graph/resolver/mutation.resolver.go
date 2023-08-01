@@ -8,20 +8,19 @@ import (
 
 type mutationResolver struct{ *Resolver }
 
-func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) (*model.Todo, error) {
-	return &model.Todo{}, nil
+// DeleteUser implements graph.MutationResolver.
+func (*mutationResolver) DeleteUser(ctx context.Context, id string) (*model.Response, error) {
+	panic("unimplemented")
 }
 
-func (r *mutationResolver) UpdateToDo(ctx context.Context, input model.NewTodo) (*model.Todo, error) {
-	panic("not implemented")
+// UpdateUser implements graph.MutationResolver.
+func (*mutationResolver) UpdateUser(ctx context.Context, id string, input model.UserInput) (*model.UserResponse, error) {
+	panic("unimplemented")
 }
 
-func (r *mutationResolver) DeleteToDo(ctx context.Context, id string) (*model.Todo, error) {
+func (r *mutationResolver) CreateUser(ctx context.Context, input model.UserInput) (*model.UserResponse, error) {
+	// return &model.Todo{}, nil
 	panic("not implemented")
 }
 
 func (r *Resolver) Mutation() graph.MutationResolver { return &mutationResolver{r} }
-
-func (*mutationResolver) DeleteCarePlan(ctx context.Context, id string) (*model.CarePlan, error) {
-	panic("unimplemented")
-}

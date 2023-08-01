@@ -16,6 +16,11 @@ type User struct {
 	Gender    *string `json:"gender,omitempty"`
 }
 
+type UserFilterInput struct {
+	Name  *string `json:"name,omitempty"`
+	Email *string `json:"email,omitempty"`
+}
+
 type UserInput struct {
 	FirstName *string `json:"firstName,omitempty"`
 	LastName  *string `json:"lastName,omitempty"`

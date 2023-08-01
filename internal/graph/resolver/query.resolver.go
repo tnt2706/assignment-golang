@@ -6,13 +6,15 @@ import (
 	"context"
 )
 
-func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
+type queryResolver struct{ *Resolver }
+
+// User implements graph.QueryResolver.
+func (*queryResolver) User(ctx context.Context, id *string) (*model.User, error) {
+	panic("unimplemented")
+}
+
+func (r *queryResolver) Users(ctx context.Context, filter model.UserFilterInput) ([]*model.User, error) {
 	panic("not implemented")
 }
 
-// Mutation returns graph.MutationResolver implementation.
-
-// Query returns graph.QueryResolver implementation.
 func (r *Resolver) Query() graph.QueryResolver { return &queryResolver{r} }
-
-type queryResolver struct{ *Resolver }
