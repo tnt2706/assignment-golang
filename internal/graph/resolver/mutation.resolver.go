@@ -6,6 +6,8 @@ import (
 	"context"
 )
 
+type mutationResolver struct{ *Resolver }
+
 func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) (*model.Todo, error) {
 	return &model.Todo{}, nil
 }
@@ -20,4 +22,6 @@ func (r *mutationResolver) DeleteToDo(ctx context.Context, id string) (*model.To
 
 func (r *Resolver) Mutation() graph.MutationResolver { return &mutationResolver{r} }
 
-type mutationResolver struct{ *Resolver }
+func (*mutationResolver) DeleteCarePlan(ctx context.Context, id string) (*model.CarePlan, error) {
+	panic("unimplemented")
+}

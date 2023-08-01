@@ -1,4 +1,4 @@
-.PHONY:	start gen-cal gen-grpc run-grpc-server
+.PHONY:	start gen-cal gen-grpc run-grpc-server gen-graphql
 
 start:
 	air
@@ -15,6 +15,11 @@ gen-grpc:
     protoc --go_out=. --go_opt=Mprotos/calculator.proto=pb \
     --go-grpc_out=. --go-grpc_opt=Mprotos/calculator.proto=pb \
     pkg/calculator/proto/calculator.proto
+
+
+gen-graphql:
+    go env -w GOFLAGS=-mod=mod \
+    go run github.com/99designs/gqlgen generate.
 
 
 # run-grpc-server:

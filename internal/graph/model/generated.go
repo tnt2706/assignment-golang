@@ -2,19 +2,30 @@
 
 package model
 
-type NewTodo struct {
-	Text   string `json:"text"`
-	UserID string `json:"userId"`
-}
-
-type Todo struct {
-	ID   string `json:"id"`
-	Text string `json:"text"`
-	Done bool   `json:"done"`
-	User *User  `json:"user"`
+type Response struct {
+	IsSuccess *bool   `json:"isSuccess,omitempty"`
+	Message   *string `json:"message,omitempty"`
 }
 
 type User struct {
-	ID   string `json:"id"`
-	Name string `json:"name"`
+	ID        string  `json:"id"`
+	FirstName *string `json:"firstName,omitempty"`
+	LastName  *string `json:"lastName,omitempty"`
+	Email     *string `json:"email,omitempty"`
+	Age       *int    `json:"age,omitempty"`
+	Gender    *string `json:"gender,omitempty"`
+}
+
+type UserInput struct {
+	FirstName *string `json:"firstName,omitempty"`
+	LastName  *string `json:"lastName,omitempty"`
+	Email     *string `json:"email,omitempty"`
+	Age       *int    `json:"age,omitempty"`
+	Gender    *string `json:"gender,omitempty"`
+}
+
+type UserResponse struct {
+	IsSuccess bool    `json:"isSuccess"`
+	Message   *string `json:"message,omitempty"`
+	User      *User   `json:"user,omitempty"`
 }
