@@ -2,6 +2,15 @@
 
 package model
 
+type CarePlan struct {
+	ID       string  `json:"id"`
+	PlanType *string `json:"planType,omitempty"`
+}
+
+type CarePlanInput struct {
+	PlanType *string `json:"planType,omitempty"`
+}
+
 type Response struct {
 	IsSuccess *bool   `json:"isSuccess,omitempty"`
 	Message   *string `json:"message,omitempty"`

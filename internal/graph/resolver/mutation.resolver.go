@@ -8,6 +8,11 @@ import (
 
 type mutationResolver struct{ *Resolver }
 
+// CreateCarePlan implements graph.MutationResolver.
+func (*mutationResolver) CreateCarePlan(ctx context.Context, input model.CarePlanInput) (*model.Response, error) {
+	panic("unimplemented")
+}
+
 // DeleteUser implements graph.MutationResolver.
 func (*mutationResolver) DeleteUser(ctx context.Context, id string) (*model.Response, error) {
 	panic("unimplemented")

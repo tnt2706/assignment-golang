@@ -2,6 +2,7 @@ package main
 
 import (
 	graph "assignment/internal/graph/generate"
+	resolver "assignment/internal/graph/resolver"
 	"context"
 	"log"
 	"net/http"
@@ -39,13 +40,13 @@ func main() {
 
 	// port := configs.GetContainerConfig().Port
 
-	const PORT = "4001"
+	const port = "4001"
 
-	srv := handler.NewDefaultServer(graph.NewExecutableSchema(graph.Config{Resolvers: &graph.Resolver{}}))
+	srv := handler.NewDefaultServer(graph.NewExecutableSchema(graph.Config{Resolvers: &resolver.Resolver{}}))
 
 	http.Handle("/", playground.Handler("GraphQL playground", "/query"))
 	http.Handle("/query", srv)
 
-	log.Printf("connect to http://localhost:%s/ for GraphQL playground", PORT)
-	log.Fatal(http.ListenAndServe(":"+PORT, nil))
+	log.Printf("connect to http://localhost:%s/ for GraphQL playground", port)
+	log.Fatal(http.ListenAndServe(":"+port, nil))
 }
