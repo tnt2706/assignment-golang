@@ -4,7 +4,6 @@ import (
 	graph "assignment/internal/graph/generate"
 	resolver "assignment/internal/graph/resolver"
 	"context"
-	"log"
 	"net/http"
 
 	"go.mongodb.org/mongo-driver/mongo"
@@ -14,28 +13,31 @@ import (
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
+
+	log "github.com/sirupsen/logrus"
 )
 
 var collection *mongo.Collection
 var ctx = context.TODO()
 
-func initMongo() {
+func init() {
 	mongoConfig := configs.GetMongoConfig()
 	clientOptions := options.Client().ApplyURI(mongoConfig.DbCommonConnectString)
 	client, err := mongo.Connect(ctx, clientOptions)
 	if err != nil {
-		log.Fatal(err)
+		// log.Fatal(err)
 	}
 
 	err = client.Ping(ctx, nil)
 	if err != nil {
-		log.Fatal(err)
+		// log.Fatal(err)
 	}
 
 	collection = client.Database("tasker").Collection("tasks")
 }
 
 func main() {
+	log.SetFormatter(&log.JSONFormatter{})
 	// calculator.StartGrpcServer()
 
 	// port := configs.GetContainerConfig().Port

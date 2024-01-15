@@ -6,6 +6,7 @@ require (
 	github.com/99designs/gqlgen v0.17.34
 	github.com/caarlos0/env/v9 v9.0.0
 	github.com/joho/godotenv v1.5.1
+	github.com/sirupsen/logrus v1.9.3
 	github.com/vektah/gqlparser/v2 v2.5.6
 	go.mongodb.org/mongo-driver v1.12.0
 	google.golang.org/grpc v1.56.2
