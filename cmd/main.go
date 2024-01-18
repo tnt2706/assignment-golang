@@ -25,12 +25,12 @@ func init() {
 	clientOptions := options.Client().ApplyURI(mongoConfig.DbCommonConnectString)
 	client, err := mongo.Connect(ctx, clientOptions)
 	if err != nil {
-		// log.Fatal(err)
+		log.Fatal(err)
 	}
 
 	err = client.Ping(ctx, nil)
 	if err != nil {
-		// log.Fatal(err)
+		log.Fatal(err)
 	}
 
 	collection = client.Database("tasker").Collection("tasks")
@@ -38,9 +38,6 @@ func init() {
 
 func main() {
 	log.SetFormatter(&log.JSONFormatter{})
-	// calculator.StartGrpcServer()
-
-	// port := configs.GetContainerConfig().Port
 
 	const port = "4001"
 
