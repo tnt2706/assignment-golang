@@ -2,6 +2,7 @@ package initialize
 
 import (
 	"assignment/internal/config"
+	"assignment/internal/repository/repoimpl"
 	"context"
 	"fmt"
 	"log"
@@ -10,14 +11,14 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-var (
-	ctx    context.Context
-	client *mongo.Client
-)
-
 func ConnectMongo() *mongo.Client {
 
-	ctx := context.TODO()
+	var (
+		ctx    context.Context
+		client *mongo.Client
+	)
+
+	ctx = context.TODO()
 
 	mongoConfig := config.GetMongoConfig()
 	clientOptions := options.Client().ApplyURI(mongoConfig.DbCommonConnectString)
@@ -33,12 +34,7 @@ func ConnectMongo() *mongo.Client {
 	}
 
 	fmt.Println("Mongo connection established")
+
+	repoimpl.NewUserService(client.Database("golang-api").Collection("users"), ctx)
 	return client
-}
-
-var DB *mongo.Client = ConnectMongo()
-
-func GetCollection(client *mongo.Client, collectionName string) (*mongo.Collection, context.Context) {
-	collection := client.Database("golangAPI").Collection(collectionName)
-	return collection, ctx
 }

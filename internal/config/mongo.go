@@ -1,7 +1,6 @@
 package config
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/caarlos0/env/v9"
@@ -24,8 +23,6 @@ func GetMongoConfig() *MongoConfig {
 	if err != nil {
 		log.Fatalf("unable to parse environment variables: %e", err)
 	}
-
-	fmt.Println(cfg)
 
 	return &cfg
 }
