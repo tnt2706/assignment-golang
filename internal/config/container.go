@@ -1,4 +1,4 @@
-package configs
+package config
 
 import (
 	"log"
@@ -15,9 +15,9 @@ type ContainerConfig struct {
 }
 
 func GetContainerConfig() *ContainerConfig {
-	err := godotenv.Load("../.env")
+	err := godotenv.Load()
 	if err != nil {
-		log.Fatalf("unable to load .env file: %e", err)
+		log.Fatalf("Container unable to load .env file: %e", err)
 	}
 
 	cfg := ContainerConfig{}

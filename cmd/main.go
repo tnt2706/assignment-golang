@@ -6,13 +6,11 @@ import (
 	"context"
 	"net/http"
 
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
-
-	"assignment/configs"
+	"assignment/internal/initialize"
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
+	"go.mongodb.org/mongo-driver/mongo"
 
 	log "github.com/sirupsen/logrus"
 )
@@ -21,19 +19,7 @@ var collection *mongo.Collection
 var ctx = context.TODO()
 
 func init() {
-	mongoConfig := configs.GetMongoConfig()
-	clientOptions := options.Client().ApplyURI(mongoConfig.DbCommonConnectString)
-	client, err := mongo.Connect(ctx, clientOptions)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	err = client.Ping(ctx, nil)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	collection = client.Database("tasker").Collection("tasks")
+	initialize.ConnectMongo()
 }
 
 func main() {

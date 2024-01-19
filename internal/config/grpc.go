@@ -1,4 +1,4 @@
-package configs
+package config
 
 import (
 	"log"
@@ -12,9 +12,9 @@ type GrpcConfig struct {
 }
 
 func GetGrpcConfig() *GrpcConfig {
-	err := godotenv.Load("../*.env")
+	err := godotenv.Load()
 	if err != nil {
-		log.Fatalf("unable to load .env file: %e", err)
+		log.Fatalf("gRPC unable to load .env file: %e", err)
 	}
 
 	cfg := GrpcConfig{}

@@ -1,0 +1,11 @@
+type User {
+  id: ID!
+  usr_name: String
+  usr_email: String
+  usr_phone: String
+  usr_sex: String
+  usr_avatar: String
+  usr_date_of_birth: String
+  usr_roles: [String]
+  usr_status: String
+}

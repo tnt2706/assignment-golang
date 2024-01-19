@@ -1,6 +1,7 @@
-package configs
+package config
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/caarlos0/env/v9"
@@ -12,9 +13,9 @@ type MongoConfig struct {
 }
 
 func GetMongoConfig() *MongoConfig {
-	err := godotenv.Load("../.env")
+	err := godotenv.Load()
 	if err != nil {
-		log.Fatalf("unable to load .env file: %e", err)
+		log.Fatalf("Mongo unable to load .env file: %e", err)
 	}
 
 	cfg := MongoConfig{}
@@ -23,6 +24,8 @@ func GetMongoConfig() *MongoConfig {
 	if err != nil {
 		log.Fatalf("unable to parse environment variables: %e", err)
 	}
+
+	fmt.Println(cfg)
 
 	return &cfg
 }

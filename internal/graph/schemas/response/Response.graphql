@@ -1,0 +1,4 @@
+type Response {
+  isSuccess: Boolean
+  message: String
+}
