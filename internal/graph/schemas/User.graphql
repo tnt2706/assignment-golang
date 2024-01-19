@@ -1,0 +1,44 @@
+input UserInput {
+  usr_name: String
+  usr_email: String
+  usr_phone: String
+  usr_sex: String
+  usr_avatar: String
+  usr_date_of_birth: String
+  usr_roles: [String]
+  usr_status: String
+}
+
+input UserFilterInput {
+  usr_name: String
+  usr_email: String
+}
+
+type UserResponse {
+  isSuccess: Boolean!
+  message: String
+  user: User
+}
+
+type Query {
+  user(_id: ID!): User
+  users(filter: UserFilterInput!): [User]
+}
+
+type Mutation {
+  createUser(input: UserInput!): UserResponse
+  updateUser(_id: ID!, input: UserInput!): UserResponse
+  deleteUser(_id: ID!): Response
+}
+
+type User {
+  id: ID!
+  usr_name: String
+  usr_email: String
+  usr_phone: String
+  usr_sex: String
+  usr_avatar: String
+  usr_date_of_birth: String
+  usr_roles: [String]
+  usr_status: String
+}

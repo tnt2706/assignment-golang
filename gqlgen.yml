@@ -14,7 +14,7 @@ exec:
 
 # Where should any generated models go?
 model:
-  filename: internal/graph/model/generated.go
+  filename: internal/graph/model/models_gen.go
   package: model
 
 # Where should the resolver implementations go?
@@ -22,7 +22,7 @@ resolver:
   # layout: follow-schema
   filename: internal/graph/resolver/resolver.go
   package: graph
-  # filename_template: "{name}.resolvers.go"
+  filename_template: "{name}.resolvers.go"
   # Optional: turn on to not generate template comments above resolvers
   # omit_template_comment: false
 

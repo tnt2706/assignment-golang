@@ -4,16 +4,9 @@ import (
 	graph "assignment/internal/graph/generate"
 	"assignment/internal/graph/model"
 	"context"
-	"fmt"
 )
 
 type queryResolver struct{ *Resolver }
-
-// CarePlan implements graph.QueryResolver.
-func (*queryResolver) CarePlan(ctx context.Context, id string) (*model.CarePlan, error) {
-	fmt.Print("AAAA")
-	return &model.CarePlan{ID: "1111"}, nil
-}
 
 // User implements graph.QueryResolver.
 func (*queryResolver) User(ctx context.Context, id string) (*model.User, error) {
@@ -23,7 +16,7 @@ func (*queryResolver) User(ctx context.Context, id string) (*model.User, error) 
 // User implements graph.QueryResolver.
 
 func (r *queryResolver) Users(ctx context.Context, filter model.UserFilterInput) ([]*model.User, error) {
-	
+
 	panic("not implemented")
 }
 
