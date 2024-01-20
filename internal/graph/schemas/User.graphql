@@ -1,17 +1,18 @@
 input UserInput {
-  usr_name: String
-  usr_email: String
-  usr_phone: String
-  usr_sex: String
-  usr_avatar: String
-  usr_date_of_birth: String
-  usr_roles: [String]
-  usr_status: String
+  name: String
+  email: String
+  phone: String
+  sex: String
+  avatar: String
+  date_of_birth: String
+  roles: [String]
+  status: String
+  password:String
 }
 
 input UserFilterInput {
-  usr_name: String
-  usr_email: String
+  name: String
+  email: String
 }
 
 type UserResponse {
@@ -22,12 +23,12 @@ type UserResponse {
 
 type User {
   id: ID!
-  usr_name: String
-  usr_email: String
-  usr_phone: String
-  usr_sex: String
-  usr_avatar: String
-  usr_date_of_birth: String
-  usr_roles: [String]
-  usr_status: String
+  name: String
+  email: String
+  phone: String
+  sex: String
+  avatar: String
+  date_of_birth: String
+  roles: [String]
+  status: String
 }

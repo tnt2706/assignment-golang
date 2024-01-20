@@ -5,7 +5,6 @@ import (
 	resolver "assignment/internal/graph/resolver"
 	"assignment/internal/initialize"
 	repo "assignment/internal/repository"
-	"fmt"
 	"net/http"
 
 	"github.com/99designs/gqlgen/graphql/handler"
@@ -22,14 +21,12 @@ func Init() {
 		userRepo = repo.NewUserRepo(db.Collection("users"))
 	)
 
-	fmt.Print(userRepo)
-
 	log.SetFormatter(&log.JSONFormatter{})
 
 	const port = "4001"
 
 	context := graph.Config{Resolvers: &resolver.Resolver{
-		// UserRepo: userRepo,
+		UserRepo: userRepo,
 	}}
 
 	srv := handler.NewDefaultServer(graph.NewExecutableSchema(context))

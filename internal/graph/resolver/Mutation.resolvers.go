@@ -6,28 +6,45 @@ package graph
 
 import (
 	graph "assignment/internal/graph/generate"
-	"assignment/internal/graph/model"
+	"assignment/internal/model"
 	"context"
+	"fmt"
 )
 
 // CreateUser is the resolver for the createUser field.
 func (r *mutationResolver) CreateUser(ctx context.Context, input model.UserInput) (*model.UserResponse, error) {
-	panic("not implemented")
+	user := &model.User{
+		Name:        input.Name,
+		Email:       input.Email,
+		Phone:       input.Phone,
+		Sex:         input.Sex,
+		Avatar:      input.Avatar,
+		DateOfBirth: input.DateOfBirth,
+		Roles:       input.Roles,
+		Status:      input.Status,
+		Password:    input.Password,
+	}
+
+	newUser, _ := r.UserRepo.CreateUser(user)
+	return &model.UserResponse{
+		IsSuccess: true,
+		User:      newUser,
+	}, nil
 }
 
-// UpdateUser implements graph.MutationResolver.
+// UpdateUser is the resolver for the updateUser field.
 func (r *mutationResolver) UpdateUser(ctx context.Context, id string, input model.UserInput) (*model.UserResponse, error) {
-	panic("unimplemented")
+	panic(fmt.Errorf("not implemented: UpdateUser - updateUser"))
 }
 
-// DeleteUser implements graph.MutationResolver.
+// DeleteUser is the resolver for the deleteUser field.
 func (r *mutationResolver) DeleteUser(ctx context.Context, id string) (*model.Response, error) {
-	panic("unimplemented")
+	panic(fmt.Errorf("not implemented: DeleteUser - deleteUser"))
 }
 
-// CreateTodo implements graph.MutationResolver.
+// CreateTodo is the resolver for the createTodo field.
 func (r *mutationResolver) CreateTodo(ctx context.Context, input model.CreateTodoInput) (*model.Todo, error) {
-	panic("unimplemented")
+	panic(fmt.Errorf("not implemented: CreateTodo - createTodo"))
 }
 
 // Mutation returns graph.MutationResolver implementation.

@@ -14,16 +14,16 @@ exec:
 
 # Where should any generated models go?
 model:
-  filename: internal/graph/model/models_gen.go
+  filename: internal/model/models_gen.go
   package: model
 
 # Where should the resolver implementations go?
 resolver:
   layout: follow-schema
   dir: internal/graph/resolver
-  # filename: internal/graph/resolver/resolver.go
   package: graph
   filename_template: "{name}.resolvers.go"
+  # filename: internal/graph/resolver/resolver.go
   # Optional: turn on to not generate template comments above resolvers
   # omit_template_comment: false
 
@@ -66,8 +66,8 @@ resolver:
 
 # gqlgen will search for any type names in the schema in these go packages
 # if they match it will use them, otherwise it will generate them.
-# autobind:
-#  - "assignment/internal/graph/model"
+autobind:
+ - "assignment/internal/model"
 
 # This section declares type mapping between the GraphQL and go type systems
 #
@@ -86,6 +86,7 @@ models:
       - github.com/99designs/gqlgen/graphql.Int
       - github.com/99designs/gqlgen/graphql.Int64
       - github.com/99designs/gqlgen/graphql.Int32
+  User:
   Todo:
     fields:
       user:

@@ -1,9 +1,8 @@
 package repository
 
 import (
-	"assignment/internal/graph/model"
+	"assignment/internal/model"
 	"context"
-	"fmt"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
@@ -14,6 +13,7 @@ import (
 type UserRepo interface {
 	FindById(string) (*model.User, error)
 	FindUserByEmail(string) (*model.User, error)
+	CreateUser(*model.User) (*model.User, error)
 }
 
 type userRepoImpl struct {
@@ -25,7 +25,6 @@ func NewUserRepo(DB *mongo.Collection) UserRepo {
 }
 
 func (u *userRepoImpl) FindById(id string) (*model.User, error) {
-	fmt.Println(id)
 	var user *model.User
 	userObjId, _ := primitive.ObjectIDFromHex(id)
 
@@ -43,5 +42,24 @@ func (u *userRepoImpl) FindUserByEmail(email string) (*model.User, error) {
 	defer cancel()
 
 	err := u.DB.FindOne(ctx, bson.M{"email": email}).Decode(&user)
+	return user, err
+}
+
+func (u *userRepoImpl) CreateUser(user *model.User) (*model.User, error) {
+
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+
+	user.HashPassword(*user.Password)
+
+	result, err := u.DB.InsertOne(ctx, user)
+
+	if err != nil {
+		return nil, err
+	}
+
+	oid, _ := result.InsertedID.(primitive.ObjectID)
+	user.ID = oid.Hex()
+
 	return user, err
 }

@@ -6,23 +6,24 @@ package graph
 
 import (
 	graph "assignment/internal/graph/generate"
-	"assignment/internal/graph/model"
+	"assignment/internal/model"
 	"context"
+	"fmt"
 )
 
-// Todos implements graph.QueryResolver.
+// Todos is the resolver for the todos field.
 func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
-	panic("unimplemented")
+	panic(fmt.Errorf("not implemented: Todos - todos"))
 }
 
-// User implements graph.QueryResolver.
+// User is the resolver for the user field.
 func (r *queryResolver) User(ctx context.Context, id string) (*model.User, error) {
-	return &model.User{ID: "1111"}, nil
+	return r.UserRepo.FindById(id)
 }
 
-// User implements graph.QueryResolver.
+// Users is the resolver for the users field.
 func (r *queryResolver) Users(ctx context.Context, filter model.UserFilterInput) ([]*model.User, error) {
-	panic("not implemented")
+	panic(fmt.Errorf("not implemented: Users - users"))
 }
 
 // Query returns graph.QueryResolver implementation.

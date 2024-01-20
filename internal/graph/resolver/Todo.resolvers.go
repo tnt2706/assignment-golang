@@ -6,13 +6,13 @@ package graph
 
 import (
 	graph "assignment/internal/graph/generate"
-	"assignment/internal/graph/model"
+	model1 "assignment/internal/model"
 	"context"
 	"fmt"
 )
 
 // User is the resolver for the user field.
-func (r *todoResolver) User(ctx context.Context, obj *model.Todo) (*model.User, error) {
+func (r *todoResolver) User(ctx context.Context, obj *model1.Todo) (*model1.User, error) {
 	panic(fmt.Errorf("not implemented: User - user"))
 }
 
