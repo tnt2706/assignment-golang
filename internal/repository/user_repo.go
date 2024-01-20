@@ -1,8 +1,47 @@
 package repository
 
-import "assignment/internal/model"
+import (
+	"assignment/internal/graph/model"
+	"context"
+	"fmt"
+	"time"
+
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo"
+)
 
 type UserRepo interface {
-	FindById(id string) (*model.User, error)
-	FindUserByEmail(email string) (*model.User, error)
+	FindById(string) (*model.User, error)
+	FindUserByEmail(string) (*model.User, error)
+}
+
+type userRepoImpl struct {
+	DB *mongo.Collection
+}
+
+func NewUserRepo(DB *mongo.Collection) UserRepo {
+	return &userRepoImpl{DB: DB}
+}
+
+func (u *userRepoImpl) FindById(id string) (*model.User, error) {
+	fmt.Println(id)
+	var user *model.User
+	userObjId, _ := primitive.ObjectIDFromHex(id)
+
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+
+	err := u.DB.FindOne(ctx, bson.M{"_id": userObjId}).Decode(&user)
+	return user, err
+}
+
+func (u *userRepoImpl) FindUserByEmail(email string) (*model.User, error) {
+	var user *model.User
+
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+
+	err := u.DB.FindOne(ctx, bson.M{"email": email}).Decode(&user)
+	return user, err
 }

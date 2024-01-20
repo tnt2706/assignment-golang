@@ -2,16 +2,14 @@ package initialize
 
 import (
 	"assignment/internal/config"
-	"assignment/internal/repository/repoimpl"
 	"context"
-	"fmt"
 	"log"
 
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func ConnectMongo() *mongo.Client {
+func ConnectMongo() *mongo.Database {
 
 	var (
 		ctx    context.Context
@@ -26,6 +24,7 @@ func ConnectMongo() *mongo.Client {
 	client, err := mongo.Connect(ctx, clientOptions)
 	if err != nil {
 		log.Fatal("error while connecting with mongo", err)
+		panic("Connected with mongodb problem")
 	}
 
 	err = client.Ping(ctx, nil)
@@ -33,8 +32,5 @@ func ConnectMongo() *mongo.Client {
 		log.Fatal("error while trying to ping mongo", err)
 	}
 
-	fmt.Println("Mongo connection established")
-
-	repoimpl.NewUserService(client.Database("golang-api").Collection("users"), ctx)
-	return client
+	return client.Database("golang-api")
 }

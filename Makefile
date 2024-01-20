@@ -1,4 +1,4 @@
-.PHONY:	start gen-cal gen-grpc
+.PHONY:	start gen-cal gen-grpc kill-port
 
 start:
 	air /cmd/main.go
@@ -17,3 +17,7 @@ gen-grpc:
 gen-graphql:
     go env -w GOFLAGS=-mod=mod \
     go run github.com/99designs/gqlgen generate
+
+kill-port:
+    lsof -i tcp:4001 \
+    kill -9 10551
