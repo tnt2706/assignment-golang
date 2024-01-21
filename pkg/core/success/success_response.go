@@ -1,4 +1,4 @@
-package core
+package success
 
 type ResponseResult struct {
 	Message string                 `json:"message"`

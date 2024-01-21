@@ -8,11 +8,11 @@ type User struct {
 	Email       *string   `json:"email" bson:"usr_email,omitempty"`
 	Phone       *string   `json:"phone" bson:"usr_phone,omitempty"`
 	Sex         *string   `json:"sex" bson:"usr_sex,omitempty"`
-	Avatar      *string   `json:"avatar" bson:"usr_avatar,omitempty"`
+	Avatar      *string   `json:"avatar" bson:"usr_avatar omitempty"`
 	DateOfBirth *string   `json:"date_of_birth" bson:"usr_date_of_birth,omitempty"`
 	Roles       []*string `json:"roles" bson:"usr_roles,omitempty"`
 	Status      *string   `json:"status" bson:"usr_status,omitempty"`
-	Password    *string   `json:"password" bson:"user_password,omitempty"`
+	Password    string    `json:"password" bson:"user_password,omitempty"`
 }
 
 func (u *User) HashPassword(password string) error {

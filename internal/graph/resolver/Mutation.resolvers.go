@@ -8,11 +8,21 @@ import (
 	graph "assignment/internal/graph/generate"
 	"assignment/internal/model"
 	"context"
+	"errors"
 	"fmt"
 )
 
 // CreateUser is the resolver for the createUser field.
 func (r *mutationResolver) CreateUser(ctx context.Context, input model.UserInput) (*model.UserResponse, error) {
+	foundUserByEmail, err := r.UserRepo.FindUserByEmail(*input.Email)
+	if err != nil {
+		return nil, err
+	}
+
+	if foundUserByEmail != nil {
+		return nil, errors.New("Email exists")
+	}
+
 	user := &model.User{
 		Name:        input.Name,
 		Email:       input.Email,
@@ -22,7 +32,7 @@ func (r *mutationResolver) CreateUser(ctx context.Context, input model.UserInput
 		DateOfBirth: input.DateOfBirth,
 		Roles:       input.Roles,
 		Status:      input.Status,
-		Password:    input.Password,
+		Password:    *input.Password,
 	}
 
 	newUser, _ := r.UserRepo.CreateUser(user)

@@ -41,7 +41,7 @@ func (u *userRepoImpl) FindUserByEmail(email string) (*model.User, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 
-	err := u.DB.FindOne(ctx, bson.M{"email": email}).Decode(&user)
+	err := u.DB.FindOne(ctx, bson.M{"usr_email": email}).Decode(&user)
 	return user, err
 }
 
@@ -50,8 +50,7 @@ func (u *userRepoImpl) CreateUser(user *model.User) (*model.User, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 
-	user.HashPassword(*user.Password)
-
+	user.HashPassword(user.Password)
 	result, err := u.DB.InsertOne(ctx, user)
 
 	if err != nil {

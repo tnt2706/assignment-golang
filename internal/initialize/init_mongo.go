@@ -3,6 +3,7 @@ package initialize
 import (
 	"assignment/internal/config"
 	"context"
+	"fmt"
 	"log"
 
 	"go.mongodb.org/mongo-driver/mongo"
@@ -31,6 +32,8 @@ func ConnectMongo() *mongo.Database {
 	if err != nil {
 		log.Fatal("error while trying to ping mongo", err)
 	}
+
+	fmt.Println("Connected with mongo success !")
 
 	return client.Database("golang-api")
 }

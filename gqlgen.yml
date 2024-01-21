@@ -66,8 +66,8 @@ resolver:
 
 # gqlgen will search for any type names in the schema in these go packages
 # if they match it will use them, otherwise it will generate them.
-autobind:
- - "assignment/internal/model"
+# autobind:
+#  - "assignment/internal/model"
 
 # This section declares type mapping between the GraphQL and go type systems
 #
@@ -87,7 +87,9 @@ models:
       - github.com/99designs/gqlgen/graphql.Int64
       - github.com/99designs/gqlgen/graphql.Int32
   User:
+    model: "assignment/internal/model.User"
   Todo:
+    model: "assignment/internal/model.Todo"
     fields:
       user:
         resolver: true

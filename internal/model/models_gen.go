@@ -45,15 +45,17 @@ type Role string
 
 const (
 	RoleAdmin Role = "ADMIN"
+	RoleUser  Role = "USER"
 )
 
 var AllRole = []Role{
 	RoleAdmin,
+	RoleUser,
 }
 
 func (e Role) IsValid() bool {
 	switch e {
-	case RoleAdmin:
+	case RoleAdmin, RoleUser:
 		return true
 	}
 	return false
