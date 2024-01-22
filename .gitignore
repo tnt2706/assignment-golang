@@ -101,5 +101,6 @@ typings/
 tmp*
 test/volumes
 globalConfig.json*
+vendor*
 
 # End of https://www.gitignore.io/api/node,macos,visualstudiocode

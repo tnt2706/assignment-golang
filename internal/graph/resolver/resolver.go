@@ -8,4 +8,5 @@ import "assignment/internal/repository"
 
 type Resolver struct {
 	UserRepo repository.UserRepo
+	TodoRepo repository.TodoRepo
 }

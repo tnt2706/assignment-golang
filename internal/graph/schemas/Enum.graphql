@@ -1,4 +1,4 @@
-enum Role {
-    ADMIN
-    USER
+enum UserStatus {
+  ACTIVE
+  PENDING
 }

@@ -81,3 +81,44 @@ func (e *Role) UnmarshalGQL(v interface{}) error {
 func (e Role) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
+
+type UserStatus string
+
+const (
+	UserStatusActive  UserStatus = "ACTIVE"
+	UserStatusPending UserStatus = "PENDING"
+)
+
+var AllUserStatus = []UserStatus{
+	UserStatusActive,
+	UserStatusPending,
+}
+
+func (e UserStatus) IsValid() bool {
+	switch e {
+	case UserStatusActive, UserStatusPending:
+		return true
+	}
+	return false
+}
+
+func (e UserStatus) String() string {
+	return string(e)
+}
+
+func (e *UserStatus) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = UserStatus(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid UserStatus", str)
+	}
+	return nil
+}
+
+func (e UserStatus) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}

@@ -14,6 +14,7 @@ type UserRepo interface {
 	FindById(string) (*model.User, error)
 	FindUserByEmail(string) (*model.User, error)
 	CreateUser(*model.User) (*model.User, error)
+	GetUsersByIds([]string) ([]*model.User, error)
 }
 
 type userRepoImpl struct {
@@ -61,4 +62,26 @@ func (u *userRepoImpl) CreateUser(user *model.User) (*model.User, error) {
 	user.ID = oid.Hex()
 
 	return user, err
+}
+
+func (u *userRepoImpl) GetUsersByIds(userIds []string) ([]*model.User, error) {
+	var users []*model.User
+
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+
+	cursor, err := u.DB.Find(ctx, bson.M{"_id": bson.M{"$in": userIds}})
+
+	if err != nil {
+		return nil, err
+	}
+
+	defer cursor.Close(ctx)
+
+	if err = cursor.All(context.TODO(), &users); err != nil {
+		return nil, err
+	}
+
+	return users, nil
+
 }

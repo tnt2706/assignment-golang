@@ -1,6 +1,6 @@
 type Mutation {
-  createUser(input: UserInput!): UserResponse
-  updateUser(_id: ID!, input: UserInput!): UserResponse
+  createUser(input: UserInput!): UserResponse @auth(roles: [ADMIN])
+  updateUser(_id: ID!, input: UserInput!): UserResponse @hasRole(role: ADMIN)
   deleteUser(_id: ID!): Response
 
   createTodo(input: CreateTodoInput!): Todo!

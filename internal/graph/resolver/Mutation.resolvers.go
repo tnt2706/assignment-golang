@@ -54,7 +54,13 @@ func (r *mutationResolver) DeleteUser(ctx context.Context, id string) (*model.Re
 
 // CreateTodo is the resolver for the createTodo field.
 func (r *mutationResolver) CreateTodo(ctx context.Context, input model.CreateTodoInput) (*model.Todo, error) {
-	panic(fmt.Errorf("not implemented: CreateTodo - createTodo"))
+	todo := &model.Todo{
+		Text: input.Text,
+		User: input.UserID,
+	}
+
+	newTodo, _ := r.TodoRepo.CreateToDo(todo)
+	return newTodo, nil
 }
 
 // Mutation returns graph.MutationResolver implementation.

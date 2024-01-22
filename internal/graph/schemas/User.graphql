@@ -7,7 +7,7 @@ input UserInput {
   date_of_birth: String
   roles: [String]
   status: String
-  password:String
+  password: String
 }
 
 input UserFilterInput {
