@@ -2,6 +2,8 @@ package config
 
 import (
 	"log"
+	"os"
+	"path/filepath"
 
 	"github.com/caarlos0/env/v9"
 	"github.com/joho/godotenv"
@@ -12,7 +14,15 @@ type MongoConfig struct {
 }
 
 func GetMongoConfig() *MongoConfig {
-	err := godotenv.Load()
+
+	// err := godotenv.Load()
+
+	// Debug code
+	path, _ := os.Executable()
+	path = filepath.Join(path, "../../.env")
+	err := godotenv.Load(path)
+	//
+
 	if err != nil {
 		log.Fatalf("Mongo unable to load .env file: %e", err)
 	}

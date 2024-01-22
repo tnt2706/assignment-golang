@@ -4,6 +4,7 @@ import (
 	"assignment/internal/model"
 	repo "assignment/internal/repository"
 	"context"
+	"fmt"
 )
 
 type UserReader struct {
@@ -12,6 +13,7 @@ type UserReader struct {
 
 func (u *UserReader) getUsers(ctx context.Context, userIDs []string) ([]*model.User, []error) {
 	users, err := u.userRepo.GetUsersByIds(userIDs)
+	fmt.Println(users)
 	if err != nil {
 		return nil, []error{err}
 	}

@@ -30,7 +30,7 @@ func Init() {
 
 	context := graph.Config{Resolvers: &resolver.Resolver{
 		UserRepo: userRepo,
-		// TodoRepo: todoRepo,
+		TodoRepo: todoRepo,
 	}}
 
 	dbLoader := loader.DBLoader{

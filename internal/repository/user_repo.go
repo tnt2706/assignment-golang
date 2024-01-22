@@ -70,15 +70,18 @@ func (u *userRepoImpl) GetUsersByIds(userIds []string) ([]*model.User, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 
-	cursor, err := u.DB.Find(ctx, bson.M{"_id": bson.M{"$in": userIds}})
+	ids := make([]primitive.ObjectID, len(userIds))
+	for i, id := range userIds {
+		ids[i], _ = primitive.ObjectIDFromHex(id)
+	}
+
+	cursor, err := u.DB.Find(ctx, bson.M{"_id": bson.M{"$in": ids}})
 
 	if err != nil {
 		return nil, err
 	}
 
-	defer cursor.Close(ctx)
-
-	if err = cursor.All(context.TODO(), &users); err != nil {
+	if err = cursor.All(ctx, &users); err != nil {
 		return nil, err
 	}
 

@@ -48,13 +48,13 @@ func For(ctx context.Context) *Loaders {
 }
 
 // GetUser returns single user by id efficiently
-func GetUser(ctx context.Context, userID string) (*model.User, error) {
+func GetUserLoader(ctx context.Context, userID string) (*model.User, error) {
 	loaders := For(ctx)
 	return loaders.UserLoader.Load(ctx, userID)
 }
 
 // GetUsers returns many users by ids efficiently
-func GetUsers(ctx context.Context, userIDs []string) ([]*model.User, error) {
+func GetUsersLoader(ctx context.Context, userIDs []string) ([]*model.User, error) {
 	loaders := For(ctx)
 	return loaders.UserLoader.LoadAll(ctx, userIDs)
 }

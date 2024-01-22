@@ -1,4 +1,5 @@
 type Query {
+  todo(_id: ID!): Todo
   todos: [Todo!]!
 
   user(_id: ID!): User

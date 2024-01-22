@@ -7,13 +7,13 @@ package graph
 import (
 	graph "assignment/internal/graph/generate"
 	"assignment/internal/graph/loader"
-	model "assignment/internal/model"
+	"assignment/internal/model"
 	"context"
 )
 
 // User is the resolver for the user field.
 func (r *todoResolver) User(ctx context.Context, obj *model.Todo) (*model.User, error) {
-	return loader.GetUser(ctx, obj.User)
+	return loader.GetUserLoader(ctx, obj.User)
 }
 
 // Todo returns graph.TodoResolver implementation.
