@@ -1,6 +1,10 @@
 package model
 
-import "golang.org/x/crypto/bcrypt"
+import (
+	"time"
+
+	"golang.org/x/crypto/bcrypt"
+)
 
 type User struct {
 	ID          string    `json:"id" bson:"_id,omitempty"`
@@ -13,6 +17,8 @@ type User struct {
 	Roles       []*string `json:"roles" bson:"usr_roles,omitempty"`
 	Status      *string   `json:"status" bson:"usr_status,omitempty"`
 	Password    string    `json:"password" bson:"user_password,omitempty"`
+	CreatedAt   time.Time `json:"createdAt" bson:"createdAt,omitempty"`
+	UpdatedAt   time.Time `json:"updatedAt" bson:"updatedAt,omitempty"`
 }
 
 func (u *User) HashPassword(password string) error {
@@ -30,4 +36,13 @@ func (u *User) ComparePassword(password string) error {
 	bytePassword := []byte(password)
 	byteHashedPassword := []byte(u.Password)
 	return bcrypt.CompareHashAndPassword(byteHashedPassword, bytePassword)
+}
+
+func (u *User) Add() {
+	u.UpdatedAt = time.Now()
+	u.CreatedAt = time.Now()
+}
+
+func (u *User) Update() {
+	u.UpdatedAt = time.Now()
 }

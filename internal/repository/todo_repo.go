@@ -28,6 +28,7 @@ func (u *todoRepoImpl) CreateToDo(todo *model.Todo) (*model.Todo, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 
+	todo.Add()
 	result, err := u.DB.InsertOne(ctx, todo)
 
 	if err != nil {

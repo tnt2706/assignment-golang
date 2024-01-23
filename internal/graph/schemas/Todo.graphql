@@ -1,8 +1,8 @@
 type Todo {
   id: ID!
-  text: String!
-  done: Boolean!
-  user: User!
+  text: String
+  done: Boolean
+  user: User
 }
 
 input CreateTodoInput {

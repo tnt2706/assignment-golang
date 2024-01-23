@@ -1,13 +1,12 @@
 package server
 
 import (
+	"assignment/internal/graph/directive"
 	graph "assignment/internal/graph/generate"
 	"assignment/internal/graph/loader"
 	"assignment/internal/middleware"
 	"assignment/internal/model"
-	"assignment/pkg/util"
 	"context"
-	"errors"
 
 	resolver "assignment/internal/graph/resolver"
 	"assignment/internal/initialize"
@@ -19,7 +18,6 @@ import (
 	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/go-chi/chi"
 
-	lo "github.com/samber/lo"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -38,30 +36,15 @@ func Init() {
 	log.SetFormatter(&log.JSONFormatter{})
 	router.Use(middleware.AuthMiddleware)
 
-	c := graph.Config{Resolvers: &resolver.Resolver{
-		UserRepo: userRepo,
-		TodoRepo: todoRepo,
-	}}
+	c := graph.Config{
+		Resolvers: &resolver.Resolver{
+			UserRepo: userRepo,
+			TodoRepo: todoRepo,
+		},
+	}
 
 	c.Directives.Auth = func(ctx context.Context, obj interface{}, next graphql.Resolver, roles []*model.Role) (res interface{}, err error) {
-
-		signature := ctx.Value("signature").(map[string]interface{})
-		var userRoles []string = signature["roles"].([]string)
-		var rolePermissions []string
-
-		for _, role := range roles {
-			rolePermissions = append(rolePermissions, role.String())
-		}
-
-		for _, role := range userRoles {
-			roleMap := util.ToGraphqlRole(role)
-
-			matchRole := lo.Contains(rolePermissions, roleMap)
-			if matchRole {
-				return next(ctx)
-			}
-		}
-		return nil, errors.New("You are not authorized for this field")
+		return directive.Auth(ctx, next, roles)
 	}
 
 	dbLoader := loader.DBLoader{

@@ -51,6 +51,7 @@ func (u *userRepoImpl) CreateUser(user *model.User) (*model.User, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 
+	user.Add()
 	user.HashPassword(user.Password)
 	result, err := u.DB.InsertOne(ctx, user)
 
