@@ -1,5 +1,4 @@
-directive @auth(roles: [Role] = [ADMIN]) on INPUT_FIELD_DEFINITION | FIELD_DEFINITION
-directive @hasRole(role: Role!) on FIELD_DEFINITION
+directive @auth(roles: [Role] = [ADMIN]) on FIELD_DEFINITION
 
 enum Role {
   ADMIN

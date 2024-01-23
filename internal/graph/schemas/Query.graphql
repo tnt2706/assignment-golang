@@ -1,5 +1,5 @@
 type Query {
-  todo(_id: ID!): Todo
+  todo(_id: ID!): Todo @auth(roles: [ADMIN])
   todos: [Todo!]!
 
   user(_id: ID!): User

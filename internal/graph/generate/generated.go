@@ -42,8 +42,7 @@ type ResolverRoot interface {
 }
 
 type DirectiveRoot struct {
-	Auth    func(ctx context.Context, obj interface{}, next graphql.Resolver, roles []*model.Role) (res interface{}, err error)
-	HasRole func(ctx context.Context, obj interface{}, next graphql.Resolver, role model.Role) (res interface{}, err error)
+	Auth func(ctx context.Context, obj interface{}, next graphql.Resolver, roles []*model.Role) (res interface{}, err error)
 }
 
 type ComplexityRoot struct {
@@ -448,8 +447,7 @@ func (ec *executionContext) introspectType(name string) (*introspection.Type, er
 }
 
 var sources = []*ast.Source{
-	{Name: "../schemas/Directive.graphql", Input: `directive @auth(roles: [Role] = [ADMIN]) on INPUT_FIELD_DEFINITION | FIELD_DEFINITION
-directive @hasRole(role: Role!) on FIELD_DEFINITION
+	{Name: "../schemas/Directive.graphql", Input: `directive @auth(roles: [Role] = [ADMIN]) on FIELD_DEFINITION
 
 enum Role {
   ADMIN
@@ -463,14 +461,14 @@ enum Role {
 `, BuiltIn: false},
 	{Name: "../schemas/Mutation.graphql", Input: `type Mutation {
   createUser(input: UserInput!): UserResponse @auth(roles: [ADMIN])
-  updateUser(_id: ID!, input: UserInput!): UserResponse @hasRole(role: ADMIN)
+  updateUser(_id: ID!, input: UserInput!): UserResponse
   deleteUser(_id: ID!): Response
 
   createTodo(input: CreateTodoInput!): Todo!
 }
 `, BuiltIn: false},
 	{Name: "../schemas/Query.graphql", Input: `type Query {
-  todo(_id: ID!): Todo
+  todo(_id: ID!): Todo @auth(roles: [ADMIN])
   todos: [Todo!]!
 
   user(_id: ID!): User
@@ -547,21 +545,6 @@ func (ec *executionContext) dir_auth_args(ctx context.Context, rawArgs map[strin
 		}
 	}
 	args["roles"] = arg0
-	return args, nil
-}
-
-func (ec *executionContext) dir_hasRole_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 model.Role
-	if tmp, ok := rawArgs["role"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("role"))
-		arg0, err = ec.unmarshalNRole2assignmentᚋinternalᚋmodelᚐRole(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["role"] = arg0
 	return args, nil
 }
 
@@ -829,32 +812,8 @@ func (ec *executionContext) _Mutation_updateUser(ctx context.Context, field grap
 		}
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().UpdateUser(rctx, fc.Args["_id"].(string), fc.Args["input"].(model.UserInput))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2assignmentᚋinternalᚋmodelᚐRole(ctx, "ADMIN")
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasRole == nil {
-				return nil, errors.New("directive hasRole is not implemented")
-			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*model.UserResponse); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *assignment/internal/model.UserResponse`, tmp)
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Mutation().UpdateUser(rctx, fc.Args["_id"].(string), fc.Args["input"].(model.UserInput))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -1036,8 +995,32 @@ func (ec *executionContext) _Query_todo(ctx context.Context, field graphql.Colle
 		}
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Todo(rctx, fc.Args["_id"].(string))
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Query().Todo(rctx, fc.Args["_id"].(string))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			roles, err := ec.unmarshalORole2ᚕᚖassignmentᚋinternalᚋmodelᚐRole(ctx, []interface{}{"ADMIN"})
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.Auth == nil {
+				return nil, errors.New("directive auth is not implemented")
+			}
+			return ec.directives.Auth(ctx, nil, directive0, roles)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*model.Todo); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *assignment/internal/model.Todo`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -4936,16 +4919,6 @@ func (ec *executionContext) marshalNID2string(ctx context.Context, sel ast.Selec
 		}
 	}
 	return res
-}
-
-func (ec *executionContext) unmarshalNRole2assignmentᚋinternalᚋmodelᚐRole(ctx context.Context, v interface{}) (model.Role, error) {
-	var res model.Role
-	err := res.UnmarshalGQL(v)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalNRole2assignmentᚋinternalᚋmodelᚐRole(ctx context.Context, sel ast.SelectionSet, v model.Role) graphql.Marshaler {
-	return v
 }
 
 func (ec *executionContext) unmarshalNString2string(ctx context.Context, v interface{}) (string, error) {
