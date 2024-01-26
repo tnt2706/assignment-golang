@@ -1,0 +1,35 @@
+input UserInput {
+  name: String
+  email: String
+  phone: String
+  sex: String
+  avatar: String
+  date_of_birth: String
+  roles: [String]
+  status: String
+  password: String
+  createdAt: Time
+}
+
+input UserFilterInput {
+  name: String
+  email: String
+}
+
+type UserResponse {
+  isSuccess: Boolean!
+  message: String
+  user: User
+}
+
+type User {
+  id: ID!
+  name: String
+  email: String
+  phone: String
+  sex: String
+  avatar: String
+  date_of_birth: String
+  roles: [String]
+  status: String
+}

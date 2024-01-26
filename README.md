@@ -2,9 +2,11 @@
 
 ## Description
 
-- [Gin](https://gin-gonic.com/) framework Go starter repository.
-- [gRPC](https://grpc.io/) Remote Procedure Call (RPC) framework
+- [Gin](https://gin-gonic.com/)
+- [gRPC](https://grpc.io/)
 - [GraphQL](https://gqlgen.com/)
+- [MongoDB](https://mongodb.com/)
+
 
 ## Installation
 
