@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"strconv"
+	"time"
 )
 
 type CreateTodoInput struct {
@@ -24,15 +25,16 @@ type UserFilterInput struct {
 }
 
 type UserInput struct {
-	Name        *string   `json:"name,omitempty"`
-	Email       *string   `json:"email,omitempty"`
-	Phone       *string   `json:"phone,omitempty"`
-	Sex         *string   `json:"sex,omitempty"`
-	Avatar      *string   `json:"avatar,omitempty"`
-	DateOfBirth *string   `json:"date_of_birth,omitempty"`
-	Roles       []*string `json:"roles,omitempty"`
-	Status      *string   `json:"status,omitempty"`
-	Password    *string   `json:"password,omitempty"`
+	Name        *string    `json:"name,omitempty"`
+	Email       *string    `json:"email,omitempty"`
+	Phone       *string    `json:"phone,omitempty"`
+	Sex         *string    `json:"sex,omitempty"`
+	Avatar      *string    `json:"avatar,omitempty"`
+	DateOfBirth *string    `json:"date_of_birth,omitempty"`
+	Roles       []*string  `json:"roles,omitempty"`
+	Status      *string    `json:"status,omitempty"`
+	Password    *string    `json:"password,omitempty"`
+	CreatedAt   *time.Time `json:"createdAt,omitempty"`
 }
 
 type UserResponse struct {

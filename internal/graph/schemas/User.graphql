@@ -8,6 +8,7 @@ input UserInput {
   roles: [String]
   status: String
   password: String
+  createdAt: Time
 }
 
 input UserFilterInput {
