@@ -24,7 +24,6 @@ func ConnectMongo() *mongo.Database {
 
 	client, err := mongo.Connect(ctx, clientOptions)
 	if err != nil {
-		log.Fatal("error while connecting with mongo", err)
 		panic("Connected with mongodb problem")
 	}
 

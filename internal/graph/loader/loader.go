@@ -42,18 +42,18 @@ func Middleware(dbLoader *DBLoader, next http.Handler) http.Handler {
 	})
 }
 
-// For returns the dataloader for a given context
+// For returns the data loader for a given context
 func For(ctx context.Context) *Loaders {
 	return ctx.Value(loadersKey).(*Loaders)
 }
 
-// GetUser returns single user by id efficiently
+// GetUserLoader returns single user by id efficiently
 func GetUserLoader(ctx context.Context, userID string) (*model.User, error) {
 	loaders := For(ctx)
 	return loaders.UserLoader.Load(ctx, userID)
 }
 
-// GetUsers returns many users by ids efficiently
+// GetUsersLoader returns many users by ids efficiently
 func GetUsersLoader(ctx context.Context, userIDs []string) ([]*model.User, error) {
 	loaders := For(ctx)
 	return loaders.UserLoader.LoadAll(ctx, userIDs)

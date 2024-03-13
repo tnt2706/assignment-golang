@@ -27,5 +27,5 @@ func Auth(ctx context.Context, next graphql.Resolver, roles []*model.Role) (res 
 		}
 	}
 
-	return nil, errors.New("You are not authorized for this field")
+	return nil, errors.New("you are not authorized for this field")
 }

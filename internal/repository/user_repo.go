@@ -52,7 +52,11 @@ func (u *userRepoImpl) CreateUser(user *model.User) (*model.User, error) {
 	defer cancel()
 
 	user.Add()
-	user.HashPassword(user.Password)
+	err := user.HashPassword(user.Password)
+	if err != nil {
+		return nil, err
+	}
+
 	result, err := u.DB.InsertOne(ctx, user)
 
 	if err != nil {

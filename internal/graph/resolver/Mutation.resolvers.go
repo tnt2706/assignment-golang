@@ -20,7 +20,7 @@ func (r *mutationResolver) CreateUser(ctx context.Context, input model.UserInput
 	}
 
 	if foundUserByEmail != nil {
-		return nil, errors.New("Email exists")
+		return nil, errors.New("email exists")
 	}
 
 	user := &model.User{
